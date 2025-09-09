@@ -44,10 +44,15 @@ export default function UploadMeshFile() {
               size="lg"
               variant="destructive"
               onClick={handleClearSelection}
+              className="cursor-pointer"
             >
               Clear
             </Button>
-            <Button size="lg" onClick={handleRenderMesh}>
+            <Button
+              size="lg"
+              onClick={handleRenderMesh}
+              className="cursor-pointer"
+            >
               Render Mesh
             </Button>
           </div>
