@@ -5,6 +5,7 @@ import Scene from "../Scene";
 import useMeshStore from "../store/meshstore";
 import { OrbitControls, Bounds, Environment } from "@react-three/drei";
 import { useHotspotStore } from "../store/hotspots";
+import UsageInstructions from "./UsageInstructions";
 
 export default function MeshLoader() {
   const scene = useMeshStore((s) => s.mesh);
@@ -13,6 +14,10 @@ export default function MeshLoader() {
   return (
     <>
       <div className="flex items-center flex-col gap-3 max-w-md w-full">
+        <h1 className="font-bold text-2xl text-fuchsia-500">
+          Welcome to Mesher 🤓
+        </h1>
+        <UsageInstructions />
         <UploadMeshFile />
         <button
           className={`${
