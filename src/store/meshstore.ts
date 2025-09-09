@@ -9,6 +9,7 @@ interface MeshState {
 export const useMeshStore = create<MeshState>((set) => ({
   mesh: null,
   setMeshData: (data) => set({ mesh: data }),
+  clearMesh: () => set({ mesh: null }),
 }));
 
 export default useMeshStore;

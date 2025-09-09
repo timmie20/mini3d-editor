@@ -26,6 +26,7 @@ interface HotspotState {
 export const useHotspotStore = create<HotspotState>((set) => ({
   hotspots: [],
   hotspotMode: false,
+
   addHotspot: (position, label) =>
     set((state) => {
       const posArray = Array.isArray(position)
@@ -39,11 +40,15 @@ export const useHotspotStore = create<HotspotState>((set) => ({
       };
       return { hotspots: [...state.hotspots, hotspot] };
     }),
+
   removeHotspot: (id) =>
     set((state) => ({ hotspots: state.hotspots.filter((h) => h.id !== id) })),
+
   clearHotspots: () => set({ hotspots: [] }),
+
   toggleHotspotMode: () =>
     set((state) => ({ hotspotMode: !state.hotspotMode })),
+
   updateHotspot: (id, data) =>
     set((state) => ({
       hotspots: state.hotspots.map((h) =>

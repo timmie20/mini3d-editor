@@ -78,8 +78,8 @@ export default function Scene({ scene }: { scene: THREE.Group }) {
                   color: "#fff",
                   border: "none",
                   outline: "none",
-                  fontSize: 12,
-                  width: "auto",
+                  fontSize: 90,
+                  width: "fit",
                 }}
               />
             </Html>

@@ -46,6 +46,7 @@ export default function MeshLoader() {
           shadow-camera-far={100}
           shadow-bias={-0.0001}
         />
+
         <Environment preset="city" />
         {scene && (
           <Bounds fit clip observe margin={1.2}>
