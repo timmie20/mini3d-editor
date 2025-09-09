@@ -4,6 +4,7 @@ import { create } from "zustand";
 interface MeshState {
   mesh: Group | null;
   setMeshData: (data: Group | null) => void;
+  clearMesh: () => void;
 }
 
 export const useMeshStore = create<MeshState>((set) => ({

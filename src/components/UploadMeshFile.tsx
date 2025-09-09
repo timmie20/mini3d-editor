@@ -4,11 +4,14 @@ import { Button } from "./ui/button";
 import useMeshLoader from "../hooks/useMeshLoader";
 import useMeshStore from "../store/meshstore";
 import type { Group } from "three";
+import useHotspotStore from "../store/hotspots";
 
 export default function UploadMeshFile() {
   const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
-  const setMeshData = useMeshStore((s) => s.setMeshData);
   const [shouldRender, setShouldRender] = React.useState(false);
+  const setMeshData = useMeshStore((s) => s.setMeshData);
+  const clearMesh = useMeshStore((s) => s.clearMesh);
+  const clearHotspots = useHotspotStore((s) => s.clearHotspots);
 
   const url = React.useMemo(() => {
     if (!selectedFile) return null;
@@ -29,6 +32,8 @@ export default function UploadMeshFile() {
   function handleClearSelection() {
     setSelectedFile(null);
     setShouldRender(false);
+    clearMesh();
+    clearHotspots();
   }
   return (
     <>
@@ -46,7 +51,7 @@ export default function UploadMeshFile() {
               onClick={handleClearSelection}
               className="cursor-pointer"
             >
-              Clear
+              Clear all
             </Button>
             <Button
               size="lg"

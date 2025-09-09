@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import * as THREE from "three";
 import { useHotspotStore } from "./store/hotspots";
 import { Html } from "@react-three/drei";
@@ -7,7 +7,9 @@ export default function Scene({ scene }: { scene: THREE.Group }) {
   const addHotspot = useHotspotStore((state) => state.addHotspot);
   const hotspots = useHotspotStore((state) => state.hotspots);
   const updateHotspot = useHotspotStore((state) => state.updateHotspot);
+  const removeHotspot = useHotspotStore((state) => state.removeHotspot);
   const hotspotMode = useHotspotStore((state) => state.hotspotMode);
+  const [onHover, setOnhover] = useState("");
   // Here I Group meshes by their names
   const meshGroups: Record<string, THREE.Mesh> = useMemo(() => {
     const groups: Record<string, THREE.Mesh> = {};
@@ -66,22 +68,51 @@ export default function Scene({ scene }: { scene: THREE.Group }) {
                 borderRadius: 4,
                 fontSize: 12,
                 whiteSpace: "nowrap",
+                pointerEvents: "auto",
+                zIndex: 10,
               }}
             >
-              <input
-                defaultValue={h.label}
-                onClick={(e) => e.stopPropagation()}
-                onPointerDown={(e) => e.stopPropagation()}
-                onChange={(e) => updateHotspot(h.id, { label: e.target.value })}
-                style={{
-                  background: "transparent",
-                  color: "#fff",
-                  border: "none",
-                  outline: "none",
-                  fontSize: 90,
-                  width: "fit",
-                }}
-              />
+              <div
+                onMouseEnter={() => setOnhover(h.id)}
+                onMouseLeave={() => setOnhover("")}
+                className="w-fit relative"
+              >
+                <input
+                  defaultValue={h.label}
+                  onClick={(e) => e.stopPropagation()}
+                  onPointerDown={(e) => e.stopPropagation()}
+                  onFocus={() => setOnhover(h.id)}
+                  onBlur={() => setOnhover("")}
+                  onChange={(e) =>
+                    updateHotspot(h.id, { label: e.target.value })
+                  }
+                  style={{
+                    background: "transparent",
+                    color: "#fff",
+                    border: "none",
+                    outline: "none",
+                    fontSize: 90,
+                    width: "fit",
+                  }}
+                />
+                {onHover && onHover === h.id && (
+                  <span
+                    className="absolute -right-10 -top-12 bg-slate-400/80 size-32 rounded-full flex justify-center items-center"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      removeHotspot(h.id);
+                    }}
+                  >
+                    <img
+                      src="/trash-solid-full.svg"
+                      className="cursor-pointer size-27"
+                      alt="Delete hotspot"
+                      title="Delete hotspot"
+                      onPointerDown={(e) => e.stopPropagation()}
+                    />
+                  </span>
+                )}
+              </div>
             </Html>
           </group>
         )
