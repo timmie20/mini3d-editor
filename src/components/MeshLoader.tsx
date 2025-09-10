@@ -6,6 +6,7 @@ import useMeshStore from "../store/meshstore";
 import { OrbitControls, Bounds, Environment } from "@react-three/drei";
 import { useHotspotStore } from "../store/hotspots";
 import UsageInstructions from "./UsageInstructions";
+import { Button } from "./ui/button";
 
 export default function MeshLoader() {
   const scene = useMeshStore((s) => s.mesh);
@@ -19,7 +20,7 @@ export default function MeshLoader() {
         </h1>
         <UsageInstructions />
         <UploadMeshFile />
-        <button
+        <Button
           className={`${
             hotspotMode ? "bg-green-500" : "bg-red-400"
           } rounded-md border px-3 py-2 text-sm text-white cursor-pointer`}
@@ -27,7 +28,13 @@ export default function MeshLoader() {
           aria-pressed={hotspotMode}
         >
           {hotspotMode ? "Hotspot mode: ON" : "Hotspot mode: OFF"}
-        </button>
+        </Button>
+
+        <Button variant="link">
+          <a href="https://github.com/timmie20/mini3d-editor" target="_blank">
+            View GitHub Here
+          </a>
+        </Button>
       </div>
       <Separator orientation="vertical" className="h-full" />
       <Canvas
